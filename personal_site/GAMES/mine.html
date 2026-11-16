@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>mine.html</title>
+    <style>
+      body {
+        font-family: "Inconsolata", monospace;
+        text-align: center;
+				background-color: lightblue;
+      }
+
+      .container {
+        width: 500px;
+        margin: 0 auto;
+      }
+
+      .box {
+        height: 50px;
+        width: 50px;
+        border: 1px solid black;
+				background-color: #D3D3D3;
+        display: inline-block;
+        box-sizing: border-box;
+        vertical-align: top;
+      }
+
+      .box:hover {
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Minesweeper</h1>
+    <div class="container"></div>
+
+    <script>
+      const container = document.querySelector(".container");
+      let revealCounter = 0;
+
+      function Box(row, col) {
+        let hasBomb = false;
+        const box = document.createElement("div");
+        box.classList.add("box");
+
+        box.addEventListener("contextmenu", e => {
+          e.preventDefault();
+          box.style.backgroundColor = "deepskyblue";
+        });
+
+        this.isBomb = function() {
+          return hasBomb;
+        };
+
+        this.setBomb = function() {
+          hasBomb = true;
+        };
+
+        this.reveal = function() {
+          if (hasBomb || box.innerHTML) {
+            return;
+          }
+
+          revealCounter += 1;
+          box.style.backgroundColor = "white";
+          if (revealCounter === 90) {
+            alert("You Win!");
+            return location.reload();
+          }
+
+          let count = 0;
+          const neighbors = [];
+
+          // top left
+          if (board[row - 1] && board[row - 1][col - 1]) {
+            neighbors.push(board[row - 1][col - 1]);
+          }
+          // top
+          if (board[row - 1] && board[row - 1][col]) {
+            neighbors.push(board[row - 1][col]);
+          }
+          // top right
+          if (board[row - 1] && board[row - 1][col + 1]) {
+            neighbors.push(board[row - 1][col + 1]);
+          }
+
+          // right
+          if (board[row] && board[row][col + 1]) {
+            neighbors.push(board[row][col + 1]);
+          }
+
+          // bottom right
+          if (board[row + 1] && board[row + 1][col + 1]) {
+            neighbors.push(board[row + 1][col + 1]);
+          }
+
+          // bottom
+          if (board[row + 1] && board[row + 1][col]) {
+            neighbors.push(board[row + 1][col]);
+          }
+
+          // bottom left
+          if (board[row + 1] && board[row + 1][col - 1]) {
+            neighbors.push(board[row + 1][col - 1]);
+          }
+
+          // left
+          if (board[row] && board[row][col - 1]) {
+            neighbors.push(board[row][col - 1]);
+          }
+
+          neighbors.forEach(e => {
+            if (e.isBomb()) {
+              count += 1;
+            }
+          });
+
+          box.innerHTML = count;
+
+          if (count === 0) {
+            neighbors.forEach(e => {
+              e.reveal();
+            });
+          }
+        };
+
+        box.addEventListener("click", () => {
+          if (hasBomb) {
+            alert("you lost");
+            return location.reload();
+          }
+          box.style.backgroundColor = "white";
+          this.reveal();
+        });
+
+        container.append(box);
+      }
+
+      const createRows = (row, i = 0, result = []) => {
+        if (i === row) return result;
+        result.push(createColumns(i, row));
+        return createRows(row, i + 1, result);
+      };
+
+      const createColumns = (row, col, i = 0, result = []) => {
+        if (i === col) return result;
+        result.push(new Box(row, i));
+        return createColumns(row, col, i + 1, result);
+      };
+
+      const board = createRows(10);
+
+      const createBombs = (maxBombs, i = 0) => {
+        if (i === maxBombs) return;
+        const row = Math.floor(Math.random() * 10);
+        const col = Math.floor(Math.random() * 10);
+
+        if (board[row][col].isBomb()) {
+          return createBombs(maxBombs, i);
+        }
+
+        board[row][col].setBomb();
+        return createBombs(maxBombs, i + 1);
+      };
+
+      createBombs(10);
+    </script>
+  </body>
+</html>

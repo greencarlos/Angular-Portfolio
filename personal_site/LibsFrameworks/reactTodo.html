@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Personal CSS -->
+    <link rel="stylesheet" href="./CSS/todo.css" />
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <title>Todo App</title>
+  </head>
+  <body>
+    <p>
+      <a href="http://carlosgreenpersonalsite.com" target="_blank">
+        Back to the homepage
+      </a>
+    </p>
+
+    <div style="color:black" id="root"></div>
+
+    <script type="text/babel">
+
+		const Todos = ({todos, deleteTodo}) => {
+			const todoList = todos.length ? (
+				todos.map((todo, index) => {
+					return (
+						<h4 className="collection-item" key={index}>
+							<span
+								onClick={() => {
+									deleteTodo(todo.id);
+								}}>
+								{todo.id}: {todo.content}
+							</span>
+						</h4>
+					);
+				})
+			) : (
+				<p className="center">
+			  	You have nothing left todo!
+				</p>
+			);
+
+			return (
+			 <div className="todos collection">
+		     {todoList}
+			 </div>
+		  )
+		};
+
+		function AddTodo(props) {
+			const [content, setContent] = React.useState('')
+
+			const handleChange = e => {
+				setContent(e.target.value)
+			}
+
+			const handleSubmit = e => {
+				e.preventDefault()
+				props.addTodo(content)
+			}
+
+				return (
+					<div>
+						<form onSubmit={handleSubmit}>
+							<label>Add Todo:</label>
+							<br />
+								<input
+								type="text"
+								onChange={handleChange}
+								value={content}
+								/>
+						</form>
+					</div>
+				  );
+				}
+
+		function App(props) {
+			const todosState = [
+				{id: 1, content: 'Buy Milk'},
+				{id: 2, content: 'Buy Cheese'},
+				{id: 3, content: 'Buy Eggs'},
+				{id: 4, content: 'Learn React Hooks'},
+			]
+
+				const [todos, setTodos] = React.useState(todosState)
+
+				const deleteTodo = id => {
+					const removedTodo = todos.filter(todo => {
+						return todo.id !== id
+					})
+
+					const updatedTodos = removedTodo.map((todo, i) => {
+						todo.id = i + 1
+						return todo 
+					}) 
+
+					setTodos(updatedTodos)
+				}
+
+				const addTodo = todo => {
+				  const newTodo = {id: todos.length + 1, content: todo}
+					const updatedTodos = [...todos, newTodo]
+					setTodos(updatedTodos)
+				}
+
+				return (
+					<div className="todo-app container">
+						<h1 className="center">React Todo List</h1>
+						<p>Click a todo to delete it</p>
+						<AddTodo addTodo={addTodo} />
+						<Todos
+							todos={todos}
+							deleteTodo={deleteTodo}
+						/>
+					</div>
+				);
+			}
+
+		ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+  </body>
+</html>

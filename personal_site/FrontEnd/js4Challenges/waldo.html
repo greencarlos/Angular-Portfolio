@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <style>
+      .smallImg { 
+				width: 464px;
+        height: 245px;
+        margin: 0 auto;
+        background-size: 100% 100%;
+      }
+
+      .smallContainer {
+        margin: auto;
+        width: 421px;
+        height: 168px;
+        cursor: none;
+      }
+
+      .circleContainer {
+        position: fixed;
+        width: 200px;
+        height: 200px;
+        display: none;
+        clip-path: circle(99px at center);
+        pointer-events: none;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background: url(../IMAGES/waldo.jpg);
+      }
+
+      body {
+        text-align: center;
+        background-color: lightblue;
+      }
+    </style>
+    <title>waldo.html</title>
+  </head>
+  <body>
+    <h1>Where's Waldo?</h1>
+    <h2>Hover your mouse over the image to find Waldo</h2>
+    <div class="container">
+      <div class="smallContainer">
+        <img
+          class="smallImg"
+          src="../IMAGES/waldo.jpg"
+        />
+      </div>
+    </div>
+
+    <div class="circleContainer">
+      <img
+        class="circle"
+        src="https://c0d3.com/challenges/assets/fair/scope.png"
+        alt=""
+      />
+    </div>
+    <script>
+      const container = document.querySelector('.container');
+      const circleContainer = document.querySelector('.circleContainer');
+      const smallImg = document.querySelector('.smallImg');
+
+      const smallContainer = document.querySelector('.smallContainer');
+      const circle = document.querySelector('.circle');
+
+      const xRatio = 1263 / 421;
+      const yRatio = 503 / 168;
+
+      smallImg.addEventListener('mousemove', e => {
+        circleContainer.style.display = 'block';
+
+        const containerX = smallContainer.offsetLeft;
+        const containerY = smallContainer.offsetTop;
+        const offsetX = e.offsetX;
+        const offsetY = e.offsetY;
+
+				circleContainer.style.left = `${containerX + offsetX - 100}px`;
+				circleContainer.style.top = `${containerY + offsetY - 100}px`;
+				circleContainer.style.backgroundPositionX = `${-1*offsetX * xRatio + 1}px`;
+				circleContainer.style.backgroundPositionY = `${-1*offsetY * yRatio + 1}px`;
+      });
+
+      smallImg.addEventListener('mouseout', e => {
+        circleContainer.style.display = 'none';
+      });
+    </script>
+  </body>
+</html>

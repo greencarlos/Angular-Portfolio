@@ -1,0 +1,160 @@
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+img {
+  width: 150px;
+  height: 100px;
+	align: middle;
+}
+
+body {
+  font: 14px "Centry Gothic", Futura, sans-serif;
+  background: seagreen;
+	text-align: center;
+}
+
+p {
+  color: white;
+	font-size: 18px;
+}
+
+a {
+	font-size: 18px;
+	color: darkblue;
+}
+
+h1 {
+  color: white;
+	text-align: center;
+}
+
+h2 { 
+	text-align: center; 
+}
+
+ol, ul {
+  padding-left: 30px;
+  color: white;
+	text-align: center;
+}
+
+li {
+	list-style-type: none;
+}
+
+.Mongo {
+	color: darkgreen;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+} 
+
+.Express {
+	color: coral;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.Node {
+	color: lightgreen;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.React {
+	color: #61dafb;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.Npm {
+	color: red;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.Mongoose {
+	color: rgb(136, 0, 0);
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.orange {
+	color: orange;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.Black {
+	color: black;
+	font-weight: bold;
+	animation: fadeIn 10s ease-in-out;
+}
+
+.Gray {
+	color: grey;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.Boot {
+	color: #563d7c;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.purple {
+	color: #764abc;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.Mocha {
+	color: #8d6748;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.Jest {
+	color: green;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.row {
+	justify-content: center;
+}
+
+.img1 {
+	width: 200px;
+	height: 200px;
+}
+
+.img2 {
+  width: 400px;
+  height: 200px;
+}
+
+.board-row:after{
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.white{
+	text-align: center;
+	color: white;
+	font-size: 20px;
+}
+
+.lightblue{
+	color: lightblue;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.col-md-2 {
+	width: 200px;
+}
+
+button:hover {
+	background-color: darkgreen;
+	color: springgreen;
+}
+
+button:active {
+	background-color: seagreen;
+	color: lime;
+}

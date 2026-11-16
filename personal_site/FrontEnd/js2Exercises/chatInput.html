@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <style>
+      body {
+        background: lightblue;
+        text-align: center;
+      }
+    </style>
+
+    <title>Chat Input</title>
+  </head>
+  <body>
+		<h1>Type a message</h1>
+    <input class="type" type="text" />
+    <button class="submit">Submit</button>
+    <h3 class="message"></h3>
+
+    <script>
+      const type = document.querySelector('.type');
+      const submit = document.querySelector('.submit');
+      const message = document.querySelector('.message');
+
+      submit.addEventListener('click', () => {
+        const value = type.value;
+        if (value) {
+          message.innerHTML += 'Anonymous: '+ value + '<br/>';
+        }
+      });
+    </script>
+  </body>
+</html>

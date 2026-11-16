@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <style>
+      body {
+        background: lightblue;
+        text-align: center;
+      }
+    </style>
+
+    <title>vanilla todo</title>
+  </head>
+  <body>
+    <h1>Vanilla TODO LIST</h1>
+		<p>(click on an element to delete it)</p>
+    <input class="filterInput" type="text" />
+    <button class="filterButton">Filter</button>
+    <input class="addInput" type="text" />
+    <button class="add">Add</button>
+    <div class="container"></div>
+
+    <script>
+      const filterInput = document.querySelector('.filterInput');
+      const filterButton = document.querySelector('.filterButton');
+
+      const addInput = document.querySelector('.addInput');
+      const add = document.querySelector('.add');
+      const container = document.querySelector('.container');
+
+      const storage = localStorage.getItem('list') || '[]';
+      const todos = JSON.parse(storage);
+
+      filterButton.addEventListener('click', () => {
+        const value = filterInput.value;
+        if (value.trim() !== '') {
+          const result = todos.filter(e => {
+            return e === value;
+          });
+          setStorage(result);
+        }
+        render();
+      });
+
+      const setStorage = arr => {
+        const list = JSON.stringify(arr);
+        localStorage.setItem('list', list);
+      };
+
+      const remove = element => {
+        const list = todos.filter(item => {
+          return item !== element.innerText;
+        });
+        setStorage(list);
+        element.remove();
+      };
+
+      const render = () => {
+        const storage = localStorage.getItem('list') || '[]';
+        const newList = JSON.parse(storage);
+
+        container.innerHTML = '';
+        newList.forEach(e => {
+          const div = document.createElement('h3');
+          div.innerText = e;
+          div.addEventListener('click', () => {
+            remove(div);
+          });
+          container.append(div);
+        });
+      };
+
+      add.addEventListener('click', () => {
+        const value = addInput.value;
+
+        if (value.trim() !== '') {
+          const div = document.createElement('h3');
+          div.innerText = value;
+          todos.push(value);
+          setStorage(todos);
+
+          div.addEventListener('click', () => {
+            remove(div);
+          });
+
+          container.append(div);
+        }
+      });
+
+      render();
+    </script>
+  </body>
+</html>

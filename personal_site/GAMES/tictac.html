@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Tic-Tac-Toe</title>
+    <style>
+      body {
+        background: lightblue;
+        text-align: center;
+      }
+      .board {
+        width: auto;
+        width: 180px;
+        margin: 0 auto;
+        height: 180px;
+      }
+      .row {
+        display: flex;
+      }
+      .box {
+        height: 60px;
+        width: 60px;
+        display: flex;
+        background: white;
+        justify-content: center;
+        text-align: center;
+        font-size: 50px;
+        border: 1px solid black;
+      }
+      .player1 {
+        color: blue;
+      }
+      .player2 {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="display">Player 1 start!</h1>
+    <div class="board"></div>
+
+    <script>
+      const board = document.querySelector('.board');
+      const display = document.querySelector('.display');
+      let player1 = true; // X
+      let player2 = false; // O
+
+      function Box(row, col, element) {
+        const box = document.createElement('div');
+        box.classList.add('box');
+
+        this.mark = () => {
+          if (!box.innerHTML) return;
+          return box.innerHTML;
+        };
+
+        box.addEventListener('click', () => {
+          if (player1 && !box.innerHTML) {
+            display.innerHTML = "Player 2 O's ";
+            box.innerHTML = 'X';
+            box.classList.add('player1');
+            player1 = false;
+            player2 = true;
+            gameOver(grid, 'X');
+          } else if (player2 && !box.innerHTML) {
+            display.innerHTML = "Player 1 X's";
+            box.innerHTML = 'O';
+            box.classList.add('player2');
+            player1 = true;
+            player2 = false;
+            gameOver(grid, 'O');
+          }
+        });
+
+        element.appendChild(box);
+      }
+
+      const gameOver = (matrix, playerMark) => {
+        const rowLen = matrix[0].length;
+        const colLen = matrix.length;
+
+        // rows
+        for (let i = 0; i < colLen; i++) {
+          const row = matrix[i];
+          const result = row.filter(ele => ele.mark() === playerMark);
+          if (result.length === rowLen) {
+            alert('Game Over!');
+            newGame();
+          }
+        }
+
+        // column
+        for (let i = 0; i < rowLen; i++) {
+          const col = matrix.map(row => row[i]);
+          const result = col.filter(ele => ele.mark() === playerMark);
+          if (result.length === colLen) {
+            alert('Gamer Over!');
+            newGame();
+          }
+        }
+
+        // left diagnal
+        const leftDiag = matrix.map((row, i) => {
+          console.log(row, 'row', row[i], 'ele');
+          return row[i];
+        }); // [0][0] -> [1][1] -> [2][2]
+        console.log(leftDiag, 'leftDiag');
+        const leftResult = leftDiag.filter(ele => ele.mark() === playerMark);
+        if (leftResult.length === rowLen) {
+          alert('Game Over!');
+          newGame();
+        }
+
+        // right diagnal
+        const rightDiag = matrix.map((row, i) => {
+          return row[row.length - 1 - i];
+        }); // [2][2] -> [1][1] -> [0][0]
+        const rightResult = rightDiag.filter(ele => ele.mark() === playerMark);
+        if (rightResult.length === rowLen) {
+          alert('Game Over!');
+          newGame();
+        }
+      };
+
+      const makeRow = (row, rowEle, i = 0, arr = []) => {
+        if (i === row) return arr;
+        arr.push(new Box(row, i, rowEle));
+        return makeRow(row, rowEle, i + 1, arr);
+      };
+
+      const makeGrid = (row, col, i = 0, arr = []) => {
+        if (i == col) return arr;
+        const rowEle = document.createElement('div');
+        rowEle.classList.add('row');
+        arr.push(makeRow(row, rowEle));
+        board.appendChild(rowEle);
+        return makeGrid(row, col, i + 1, arr);
+      };
+
+      const newGame = () => {
+        const num = prompt('New Game? Enter a number over 2 for boards');
+        if (+num >= 3) {
+          console.log(num, 'num');
+          board.innerHTML = '';
+          board.style.height = `${+num * 61}px`;
+          board.style.width = `${+num * 61}px`;
+          grid = makeGrid(+num, +num);
+        }
+      };
+
+      let grid = makeGrid(3, 3);
+    </script>
+  </body>
+</html>
